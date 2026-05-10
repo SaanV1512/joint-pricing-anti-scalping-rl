@@ -1,0 +1,58 @@
+
+=================================================================
+  IPL MATCH DAY SIMULATION  |  Agent: DQN AGENT
+=================================================================
+  Total Inventory : 2000 tickets
+  Base Price      : ₹1,000
+  Match Duration  : 100 time-steps
+  Scalper Ratio   : 30% of traffic
+=================================================================
+  [  1/100] LAUNCH RUSH  | Price: ₹ 1,000 (    keep) | Limit: 3  ( tighten) | Suspicion: 0.07 🟢 LOW      | Inv:  1812 | R: +0.800
+  [  2/100] LAUNCH RUSH  | Price: ₹   900 (decrease) | Limit: 2  ( tighten) | Suspicion: 0.09 🟢 LOW      | Inv:  1672 | R: +0.800
+  [  3/100] LAUNCH RUSH  | Price: ₹   810 (decrease) | Limit: 1  ( tighten) | Suspicion: 0.09 🟢 LOW      | Inv:  1583 | R: +0.663
+  [  4/100] LAUNCH RUSH  | Price: ₹   729 (decrease) | Limit: 1  ( tighten) | Suspicion: 0.09 🟢 LOW      | Inv:  1493 | R: +0.702
+  [  5/100] LAUNCH RUSH  | Price: ₹   656 (decrease) | Limit: 1  ( tighten) | Suspicion: 0.10 🟢 LOW      | Inv:  1399 | R: +0.788
+  [  6/100] LAUNCH RUSH  | Price: ₹   590 (decrease) | Limit: 1  ( tighten) | Suspicion: 0.10 🟢 LOW      | Inv:  1299 | R: +0.800
+  [  7/100] LAUNCH RUSH  | Price: ₹   531 (decrease) | Limit: 1  ( tighten) | Suspicion: 0.10 🟢 LOW      | Inv:  1209 | R: +0.744
+  [  8/100] LAUNCH RUSH  | Price: ₹   500 (decrease) | Limit: 1  ( tighten) | Suspicion: 0.10 🟢 LOW      | Inv:  1127 | R: +0.619
+  [  9/100] LAUNCH RUSH  | Price: ₹   500 (decrease) | Limit: 1  ( tighten) | Suspicion: 0.10 🟢 LOW      | Inv:  1029 | R: +0.779
+  [ 10/100] LAUNCH RUSH  | Price: ₹   500 (decrease) | Limit: 1  ( tighten) | Suspicion: 0.11 🟢 LOW      | Inv:   950 | R: +0.589
+  [ 11/100] LAUNCH RUSH  | Price: ₹   500 (decrease) | Limit: 1  ( tighten) | Suspicion: 0.10 🟢 LOW      | Inv:   876 | R: +0.539
+  [ 12/100] LAUNCH RUSH  | Price: ₹   500 (decrease) | Limit: 1  ( tighten) | Suspicion: 0.10 🟢 LOW      | Inv:   780 | R: +0.759
+  [ 13/100] LAUNCH RUSH  | Price: ₹   500 (decrease) | Limit: 1  ( tighten) | Suspicion: 0.10 🟢 LOW      | Inv:   687 | R: +0.729
+  [ 14/100] LAUNCH RUSH  | Price: ₹   500 (decrease) | Limit: 1  ( tighten) | Suspicion: 0.10 🟢 LOW      | Inv:   621 | R: +0.459
+  [ 15/100] LAUNCH RUSH  | Price: ₹   500 (decrease) | Limit: 1  ( tighten) | Suspicion: 0.10 🟢 LOW      | Inv:   517 | R: +0.799
+  [ 16/100] MID-SALE     | Price: ₹   500 (decrease) | Limit: 1  ( tighten) | Suspicion: 0.10 🟢 LOW      | Inv:   494 | R: -0.006
+  [ 17/100] MID-SALE     | Price: ₹   500 (decrease) | Limit: 1  ( tighten) | Suspicion: 0.10 🟢 LOW      | Inv:   469 | R: +0.049
+  [ 18/100] MID-SALE     | Price: ₹   500 (decrease) | Limit: 1  ( tighten) | Suspicion: 0.11 🟢 LOW      | Inv:   438 | R: +0.109
+  [ 19/100] MID-SALE     | Price: ₹   500 (decrease) | Limit: 1  ( tighten) | Suspicion: 0.11 🟢 LOW      | Inv:   426 | R: -0.081
+  [ 20/100] MID-SALE     | Price: ₹   500 (decrease) | Limit: 1  ( tighten) | Suspicion: 0.11 🟢 LOW      | Inv:   405 | R: +0.009
+  [ 21/100] MID-SALE     | Price: ₹   500 (decrease) | Limit: 1  ( tighten) | Suspicion: 0.11 🟢 LOW      | Inv:   388 | R: -0.032
+  [ 22/100] MID-SALE     | Price: ₹   500 (decrease) | Limit: 2  (   relax) | Suspicion: 0.13 🟢 LOW      | Inv:   379 | R: -0.112
+  [ 23/100] MID-SALE     | Price: ₹   500 (decrease) | Limit: 1  ( tighten) | Suspicion: 0.12 🟢 LOW      | Inv:   369 | R: -0.102
+  [ 24/100] MID-SALE     | Price: ₹   500 (decrease) | Limit: 2  (   relax) | Suspicion: 0.13 🟢 LOW      | Inv:   354 | R: -0.052
+  [ 25/100] MID-SALE     | Price: ₹   500 (decrease) | Limit: 1  ( tighten) | Suspicion: 0.12 🟢 LOW      | Inv:   332 | R: +0.018
+  [ 26/100] MID-SALE     | Price: ₹   500 (decrease) | Limit: 2  (   relax) | Suspicion: 0.13 🟢 LOW      | Inv:   292 | R: +0.198
+  [ 27/100] MID-SALE     | Price: ₹   500 (decrease) | Limit: 3  (   relax) | Suspicion: 0.13 🟢 LOW      | Inv:   268 | R: +0.038
+  [ 28/100] MID-SALE     | Price: ₹   500 (decrease) | Limit: 4  (   relax) | Suspicion: 0.14 🟢 LOW      | Inv:   250 | R: -0.022
+  [ 29/100] MID-SALE     | Price: ₹   500 (decrease) | Limit: 4  (   relax) | Suspicion: 0.14 🟢 LOW      | Inv:   220 | R: +0.098
+  [ 30/100] MID-SALE     | Price: ₹   500 (decrease) | Limit: 4  (   relax) | Suspicion: 0.14 🟢 LOW      | Inv:   191 | R: +0.088  🔥 NEARLY SOLD OUT
+  [ 31/100] MID-SALE     | Price: ₹   500 (decrease) | Limit: 4  (   relax) | Suspicion: 0.15 🟢 LOW      | Inv:   151 | R: +0.199  🔥 NEARLY SOLD OUT
+  [ 32/100] MID-SALE     | Price: ₹   500 (decrease) | Limit: 4  (   relax) | Suspicion: 0.15 🟢 LOW      | Inv:   128 | R: +0.029  🔥 NEARLY SOLD OUT
+  [ 33/100] MID-SALE     | Price: ₹   500 (decrease) | Limit: 4  (   relax) | Suspicion: 0.16 🟢 LOW      | Inv:   105 | R: +0.029  🔥 NEARLY SOLD OUT
+  [ 34/100] MID-SALE     | Price: ₹   500 (decrease) | Limit: 4  (   relax) | Suspicion: 0.16 🟢 LOW      | Inv:    81 | R: +0.039  🔥 NEARLY SOLD OUT
+  [ 35/100] MID-SALE     | Price: ₹   500 (decrease) | Limit: 4  (   relax) | Suspicion: 0.15 🟢 LOW      | Inv:    63 | R: -0.021  🔥 NEARLY SOLD OUT
+  [ 36/100] MID-SALE     | Price: ₹   500 (decrease) | Limit: 4  (   relax) | Suspicion: 0.15 🟢 LOW      | Inv:    31 | R: +0.120  🔥 NEARLY SOLD OUT
+  [ 37/100] MID-SALE     | Price: ₹   500 (decrease) | Limit: 4  (   relax) | Suspicion: 0.16 🟢 LOW      | Inv:     6 | R: +0.050  🔥 NEARLY SOLD OUT
+  [ 38/100] MID-SALE     | Price: ₹   500 (decrease) | Limit: 4  (   relax) | Suspicion: 0.10 🟢 LOW      | Inv:     0 | R: +0.420  🔥 NEARLY SOLD OUT
+
+=================================================================
+  FINAL MATCH DAY REPORT
+=================================================================
+  Total Revenue       : ₹1,224,752.09
+  Tickets to Genuine  :   1055
+  Tickets to Scalpers :    945
+  Fairness Index      : 0.527  (higher = better)
+  Scalper Rate        : 0.472  (lower = better)
+  Remaining Inventory : 0
+=================================================================

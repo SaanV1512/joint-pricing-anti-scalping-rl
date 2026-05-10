@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPL Ticketing AI Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --glass-bg: rgba(20, 25, 40, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --accent-glow: rgba(99, 102, 241, 0.4);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --highlight: #818cf8;
+            --highlight-2: #c084fc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Animated Background Orbs */
+        .bg-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+            animation: float 20s infinite ease-in-out alternate;
+        }
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: rgba(99, 102, 241, 0.25);
+            top: -100px;
+            left: -100px;
+        }
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: rgba(192, 132, 252, 0.2);
+            bottom: 10%;
+            right: -150px;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(50px, 50px) scale(1.1); }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 4rem;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, var(--highlight), var(--highlight-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        p.subtitle {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            font-weight: 300;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Classes */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .glass-card h3 {
+            margin-bottom: 1.5rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            text-align: center;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 45px 0 var(--accent-glow);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Table Styles */
+        .table-wrapper {
+            overflow-x: auto;
+            margin-bottom: 4rem;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        th {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            padding: 1.2rem 1rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        td {
+            padding: 1.2rem 1rem;
+            font-size: 1.1rem;
+            font-weight: 400;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            transition: background 0.3s ease;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .agent-name {
+            font-weight: 600;
+            color: var(--highlight-2);
+            text-align: left;
+        }
+
+        .metric-good {
+            color: #4ade80;
+            font-weight: 600;
+        }
+
+        /* Sections */
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .section-title::before {
+            content: '';
+            display: block;
+            width: 8px;
+            height: 32px;
+            background: linear-gradient(to bottom, var(--highlight), var(--highlight-2));
+            border-radius: 4px;
+        }
+
+        /* Image Grids */
+        .grid-1 {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(48%, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(48%, 1fr)); /* Changed to 2 columns for better readability */
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .plot-container {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.4);
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .plot-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .glass-card:hover .plot-container img {
+            transform: scale(1.03);
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .grid-1, .grid-2, .grid-3 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+
+    <div class="container">
+        <header>
+            <h1>IPL Ticketing AI</h1>
+            <p class="subtitle">Reinforcement Learning for Joint Dynamic Pricing and Anti-Scalping Control</p>
+        </header>
+
+        {% if table_data %}
+        <div class="table-wrapper glass-card">
+            <h2 class="section-title">Final Agent Benchmark</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Agent Architecture</th>
+                        <th>Mean Reward</th>
+                        <th>Revenue (₹)</th>
+                        <th>Fairness Idx</th>
+                        <th>Scalper Rate</th>
+                        <th>Avg Price (₹)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in table_data %}
+                    <tr>
+                        <td class="agent-name">{{ row.agent }}</td>
+                        <td class="{% if row.reward|float > 10 %}metric-good{% endif %}">{{ row.reward }}</td>
+                        <td>{{ row.revenue }}</td>
+                        <td>{{ row.fairness }}</td>
+                        <td class="{% if row.scalper.replace('%','')|float < 60 %}metric-good{% endif %}">{{ row.scalper }}</td>
+                        <td>{{ row.price }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+
+        {% if dashboards %}
+        <h2 class="section-title">Training Architectures</h2>
+        <div class="grid-1">
+            {% for img in dashboards %}
+            <div class="glass-card">
+                <h3 style="color: var(--text-muted); font-weight: 400;">{{ img.replace('.png', '').replace('_', ' ').title() }}</h3>
+                <div class="plot-container">
+                    <img src="{{ url_for('results', filename=img) }}" alt="{{ img }}">
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if heatmaps %}
+        <h2 class="section-title">Action Policy Heatmaps</h2>
+        <div class="grid-2">
+            {% for img in heatmaps %}
+            <div class="glass-card">
+                <h3 style="color: var(--text-muted); font-weight: 400;">{{ img.replace('.png', '').replace('_', ' ').title() }}</h3>
+                <div class="plot-container">
+                    <img src="{{ url_for('results', filename=img) }}" alt="{{ img }}">
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if others %}
+        <h2 class="section-title">System Analysis</h2>
+        <div class="grid-1">
+            {% for img in others %}
+            <div class="glass-card">
+                <h3 style="color: var(--text-muted); font-weight: 400; font-size: 1.1rem;">{{ img.replace('.png', '').replace('_', ' ').title() }}</h3>
+                <div class="plot-container">
+                    <img src="{{ url_for('results', filename=img) }}" alt="{{ img }}">
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+    </div>
+</body>
+</html>

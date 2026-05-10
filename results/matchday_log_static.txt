@@ -1,0 +1,30 @@
+
+=================================================================
+  IPL MATCH DAY SIMULATION  |  Agent: STATIC BASELINE
+=================================================================
+  Total Inventory : 2000 tickets
+  Base Price      : ₹1,000
+  Match Duration  : 100 time-steps
+  Scalper Ratio   : 30% of traffic
+=================================================================
+  [  1/100] LAUNCH RUSH  | Price: ₹ 1,000 (    keep) | Limit: 4  (maintain) | Suspicion: 0.08 🟢 LOW      | Inv:  1768 | R: +0.800
+  [  2/100] LAUNCH RUSH  | Price: ₹ 1,000 (    keep) | Limit: 4  (maintain) | Suspicion: 0.12 🟢 LOW      | Inv:  1555 | R: +0.709
+  [  3/100] LAUNCH RUSH  | Price: ₹ 1,000 (    keep) | Limit: 4  (maintain) | Suspicion: 0.14 🟢 LOW      | Inv:  1326 | R: +0.665
+  [  4/100] LAUNCH RUSH  | Price: ₹ 1,000 (    keep) | Limit: 4  (maintain) | Suspicion: 0.15 🟢 LOW      | Inv:  1087 | R: +0.670
+  [  5/100] LAUNCH RUSH  | Price: ₹ 1,000 (    keep) | Limit: 4  (maintain) | Suspicion: 0.15 🟢 LOW      | Inv:   876 | R: +0.696
+  [  6/100] LAUNCH RUSH  | Price: ₹ 1,000 (    keep) | Limit: 4  (maintain) | Suspicion: 0.16 🟢 LOW      | Inv:   704 | R: +0.714
+  [  7/100] LAUNCH RUSH  | Price: ₹ 1,000 (    keep) | Limit: 4  (maintain) | Suspicion: 0.16 🟢 LOW      | Inv:   503 | R: +0.627
+  [  8/100] LAUNCH RUSH  | Price: ₹ 1,000 (    keep) | Limit: 4  (maintain) | Suspicion: 0.16 🟢 LOW      | Inv:   302 | R: +0.762
+  [  9/100] LAUNCH RUSH  | Price: ₹ 1,000 (    keep) | Limit: 4  (maintain) | Suspicion: 0.16 🟢 LOW      | Inv:   123 | R: +0.677  🔥 NEARLY SOLD OUT
+  [ 10/100] LAUNCH RUSH  | Price: ₹ 1,000 (    keep) | Limit: 4  (maintain) | Suspicion: 0.13 🟢 LOW      | Inv:     0 | R: +1.031  🔥 NEARLY SOLD OUT
+
+=================================================================
+  FINAL MATCH DAY REPORT
+=================================================================
+  Total Revenue       : ₹2,000,000.00
+  Tickets to Genuine  :    427
+  Tickets to Scalpers :   1573
+  Fairness Index      : 0.213  (higher = better)
+  Scalper Rate        : 0.786  (lower = better)
+  Remaining Inventory : 0
+=================================================================

@@ -1,0 +1,2 @@
+Fatal Python error: OMP: Error #179: Function pthread_mutex_init failed:
+OMP: System error #22: Invalid argument
