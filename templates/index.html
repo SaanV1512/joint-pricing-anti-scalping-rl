@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,6 +43,7 @@
             z-index: -1;
             animation: float 20s infinite ease-in-out alternate;
         }
+
         .orb-1 {
             width: 400px;
             height: 400px;
@@ -49,6 +51,7 @@
             top: -100px;
             left: -100px;
         }
+
         .orb-2 {
             width: 500px;
             height: 500px;
@@ -59,8 +62,13 @@
         }
 
         @keyframes float {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(50px, 50px) scale(1.1); }
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            100% {
+                transform: translate(50px, 50px) scale(1.1);
+            }
         }
 
         /* Container */
@@ -181,7 +189,7 @@
             align-items: center;
             gap: 1rem;
         }
-        
+
         .section-title::before {
             content: '';
             display: block;
@@ -208,7 +216,8 @@
 
         .grid-3 {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(48%, 1fr)); /* Changed to 2 columns for better readability */
+            grid-template-columns: repeat(auto-fit, minmax(48%, 1fr));
+            /* Changed to 2 columns for better readability */
             gap: 2rem;
             margin-bottom: 4rem;
         }
@@ -218,7 +227,7 @@
             border-radius: 12px;
             overflow: hidden;
             background: rgba(0, 0, 0, 0.4);
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
         }
 
         .plot-container img {
@@ -232,24 +241,393 @@
             transform: scale(1.03);
         }
 
+        /* METRICS STRIP */
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+            animation: fadeInUp 1s ease-out 0.1s both;
+        }
+
+        .metric-card {
+            position: relative;
+            overflow: hidden;
+            background: rgba(20, 25, 40, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 24px;
+            padding: 1.8rem;
+            backdrop-filter: blur(16px);
+            transition: 0.4s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(99, 102, 241, 0.25);
+        }
+
+        .metric-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg,
+                    rgba(129, 140, 248, 0.15),
+                    transparent,
+                    rgba(192, 132, 252, 0.12));
+            pointer-events: none;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .metric-card h2 {
+            margin-top: 1rem;
+            font-size: 2.3rem;
+            font-weight: 700;
+        }
+
+        .pulse {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            margin-top: 1rem;
+            animation: pulseAnim 1.5s infinite;
+        }
+
+        .pulse-green {
+            background: #22c55e;
+            box-shadow: 0 0 20px #22c55e;
+        }
+
+        .pulse-red {
+            background: #ef4444;
+            box-shadow: 0 0 20px #ef4444;
+        }
+
+        @keyframes pulseAnim {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.4);
+                opacity: 0.6;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
         /* Animations */
         @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* STATUS BAR */
+
+        .status-bar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 4rem;
+            padding: 1.2rem 2rem;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .live {
+            background: #22c55e;
+            box-shadow: 0 0 12px #22c55e;
+            animation: blink 1.5s infinite;
+        }
+
+        .warning {
+            background: #f59e0b;
+            box-shadow: 0 0 12px #f59e0b;
+            animation: blink 1.2s infinite;
+        }
+
+        .success {
+            background: #38bdf8;
+            box-shadow: 0 0 12px #38bdf8;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.4;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* RL DECISION PANEL */
+
+        .decision-panel {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .decision-left {
+            flex: 1;
+        }
+
+        .decision-label {
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+
+        .decision-action {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-top: 1rem;
+
+            background: linear-gradient(135deg,
+                    #818cf8,
+                    #c084fc);
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .decision-sub {
+            margin-top: 1rem;
+            color: var(--text-muted);
+            max-width: 500px;
+            line-height: 1.6;
+        }
+
+        .decision-right {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .decision-box {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 1.2rem 1.5rem;
+            min-width: 180px;
+        }
+
+        .decision-box span {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+
+        .decision-box h2 {
+            margin-top: 0.8rem;
+            font-size: 1.8rem;
+        }
+
+        /* STADIUM */
+
+        .stadium-card {
+            margin-bottom: 4rem;
+        }
+
+        .stadium-wrapper {
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .stadium {
+            flex: 1;
+            min-width: 500px;
+
+            background:
+                radial-gradient(circle at center,
+                    rgba(129, 140, 248, 0.08),
+                    transparent 70%);
+
+            padding: 2rem;
+            border-radius: 30px;
+            box-shadow: inset 0 0 40px rgba(129, 140, 248, 0.15);
+        }
+
+        #seatContainer {
+            display: grid;
+            grid-template-columns: repeat(24, 1fr);
+            gap: 8px;
+        }
+
+        .seat {
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.08);
+            transition: 0.3s ease;
+        }
+
+        .seat.filled {
+            background: #22c55e;
+            box-shadow: 0 0 12px #22c55e;
+        }
+
+        .seat.bot {
+            background: #ef4444;
+            box-shadow: 0 0 12px #ef4444;
+        }
+
+        .stadium-side-panel {
+            width: 250px;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .stadium-stat {
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 20px;
+            padding: 1.5rem;
+        }
+
+        .stadium-stat span {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .stadium-stat h2 {
+            margin-top: 0.8rem;
+            font-size: 2rem;
+        }
+
+        /* CONTROL PANEL */
+
+        .control-panel {
+            margin-bottom: 4rem;
+        }
+
+        .control-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .control-box {
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .control-box label {
+            display: block;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        #intensitySlider {
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        #intensityLabel {
+            margin-top: 1rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #818cf8;
+        }
+
+        #botAttackBtn {
+            margin-top: 1rem;
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 16px;
+
+            background: linear-gradient(135deg,
+                    #ef4444,
+                    #f97316);
+
+            color: white;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+
+            transition: 0.3s ease;
+        }
+
+        #botAttackBtn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(239, 68, 68, 0.4);
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            .grid-1, .grid-2, .grid-3 { grid-template-columns: 1fr; }
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .grid-1,
+            .grid-2,
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
+
 <body>
     <div class="bg-orb orb-1"></div>
     <div class="bg-orb orb-2"></div>
@@ -259,7 +637,155 @@
             <h1>IPL Ticketing AI</h1>
             <p class="subtitle">Reinforcement Learning for Joint Dynamic Pricing and Anti-Scalping Control</p>
         </header>
+        <!-- LIVE METRICS -->
+        <div class="metrics-grid">
 
+            <div class="metric-card">
+                <span class="metric-label">Threat Level</span>
+                <h2 id="threatText">LOW</h2>
+                <div class="pulse pulse-green"></div>
+            </div>
+
+            <div class="metric-card">
+                <span class="metric-label">Revenue Stream</span>
+                <h2 id="revenueCounter">₹ 0</h2>
+            </div>
+
+            <div class="metric-card">
+                <span class="metric-label">Fairness Index</span>
+                <h2 id="fairnessCounter">0.00</h2>
+            </div>
+
+            <div class="metric-card">
+                <span class="metric-label">Scalper Detection</span>
+                <h2 id="botCounter">0%</h2>
+            </div>
+
+        </div>
+        <!-- LIVE STATUS BAR -->
+
+        <div class="status-bar glass-card">
+
+            <div class="status-item">
+                <span class="dot live"></span>
+                RL POLICY ACTIVE
+            </div>
+
+            <div class="status-item">
+                <span class="dot warning"></span>
+                BOT TRAFFIC MONITORING
+            </div>
+
+            <div class="status-item">
+                <span class="dot success"></span>
+                INVENTORY ENGINE ONLINE
+            </div>
+
+            <div class="status-item">
+                <span class="dot live"></span>
+                DQN INFERENCE RUNNING
+            </div>
+
+        </div>
+        <!-- RL DECISION CENTER -->
+
+        <div class="decision-panel glass-card">
+
+            <div class="decision-left">
+                <span class="decision-label">Current RL Action</span>
+
+                <div class="decision-action" id="actionText">
+                    INCREASE PRICE
+                </div>
+
+                <div class="decision-sub">
+                    Tightening purchase limits due to elevated scalper activity
+                </div>
+            </div>
+
+            <div class="decision-right">
+
+                <div class="decision-box">
+                    <span>PRICE MOVE</span>
+                    <h2 id="priceMove">+10%</h2>
+                </div>
+
+                <div class="decision-box">
+                    <span>LIMIT POLICY</span>
+                    <h2 id="limitMove">TIGHTEN</h2>
+                </div>
+
+            </div>
+
+        </div>
+        <!-- STADIUM VISUALIZATION -->
+
+        <div class="glass-card stadium-card">
+
+            <h2 class="section-title">Live Stadium Occupancy</h2>
+
+            <div class="stadium-wrapper">
+
+                <div class="stadium">
+
+                    <!-- seats generated by JS -->
+                    <div id="seatContainer"></div>
+
+                </div>
+
+                <div class="stadium-side-panel">
+
+                    <div class="stadium-stat">
+                        <span>Tickets Sold</span>
+                        <h2 id="soldSeats">0</h2>
+                    </div>
+
+                    <div class="stadium-stat">
+                        <span>Bot Occupancy</span>
+                        <h2 id="botSeats">0%</h2>
+                    </div>
+
+                    <div class="stadium-stat">
+                        <span>Gate Status</span>
+                        <h2 id="gateStatus">OPEN</h2>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- MATCH CONTROL -->
+
+        <div class="glass-card control-panel">
+
+            <h2 class="section-title">Match Control Center</h2>
+
+            <div class="control-grid">
+
+                <div class="control-box">
+                    <label>Match Intensity</label>
+
+                    <input type="range" min="1" max="4" value="2" id="intensitySlider">
+
+                    <div id="intensityLabel">
+                        NORMAL DEMAND
+                    </div>
+                </div>
+
+                <div class="control-box">
+
+                    <label>Emergency Actions</label>
+
+                    <button id="botAttackBtn">
+                        SIMULATE BOT ATTACK
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
         {% if table_data %}
         <div class="table-wrapper glass-card">
             <h2 class="section-title">Final Agent Benchmark</h2>
@@ -281,7 +807,8 @@
                         <td class="{% if row.reward|float > 10 %}metric-good{% endif %}">{{ row.reward }}</td>
                         <td>{{ row.revenue }}</td>
                         <td>{{ row.fairness }}</td>
-                        <td class="{% if row.scalper.replace('%','')|float < 60 %}metric-good{% endif %}">{{ row.scalper }}</td>
+                        <td class="{% if row.scalper.replace('%','')|float < 60 %}metric-good{% endif %}">{{ row.scalper
+                            }}</td>
                         <td>{{ row.price }}</td>
                     </tr>
                     {% endfor %}
@@ -295,7 +822,8 @@
         <div class="grid-1">
             {% for img in dashboards %}
             <div class="glass-card">
-                <h3 style="color: var(--text-muted); font-weight: 400;">{{ img.replace('.png', '').replace('_', ' ').title() }}</h3>
+                <h3 style="color: var(--text-muted); font-weight: 400;">{{ img.replace('.png', '').replace('_', '
+                    ').title() }}</h3>
                 <div class="plot-container">
                     <img src="{{ url_for('results', filename=img) }}" alt="{{ img }}">
                 </div>
@@ -309,7 +837,8 @@
         <div class="grid-2">
             {% for img in heatmaps %}
             <div class="glass-card">
-                <h3 style="color: var(--text-muted); font-weight: 400;">{{ img.replace('.png', '').replace('_', ' ').title() }}</h3>
+                <h3 style="color: var(--text-muted); font-weight: 400;">{{ img.replace('.png', '').replace('_', '
+                    ').title() }}</h3>
                 <div class="plot-container">
                     <img src="{{ url_for('results', filename=img) }}" alt="{{ img }}">
                 </div>
@@ -323,7 +852,8 @@
         <div class="grid-1">
             {% for img in others %}
             <div class="glass-card">
-                <h3 style="color: var(--text-muted); font-weight: 400; font-size: 1.1rem;">{{ img.replace('.png', '').replace('_', ' ').title() }}</h3>
+                <h3 style="color: var(--text-muted); font-weight: 400; font-size: 1.1rem;">{{ img.replace('.png',
+                    '').replace('_', ' ').title() }}</h3>
                 <div class="plot-container">
                     <img src="{{ url_for('results', filename=img) }}" alt="{{ img }}">
                 </div>
@@ -333,5 +863,192 @@
         {% endif %}
 
     </div>
+    <script>
+
+        let revenue = 1000000;
+        let fairness = 0.42;
+        let botRate = 35;
+        let attackMode = false;
+        const actions = [
+            {
+                action: "INCREASE PRICE",
+                sub: "Tightening purchase limits due to elevated scalper activity",
+                price: "+10%",
+                limit: "TIGHTEN"
+            },
+            {
+                action: "DECREASE PRICE",
+                sub: "Relaxing limits to improve fairness for genuine fans",
+                price: "-10%",
+                limit: "RELAX"
+            },
+            {
+                action: "MAINTAIN POLICY",
+                sub: "Current market conditions are stable",
+                price: "HOLD",
+                limit: "MAINTAIN"
+            }
+        ];
+        const seatContainer = document.getElementById("seatContainer");
+
+        for (let i = 0; i < 240; i++) {
+
+            const seat = document.createElement("div");
+            seat.classList.add("seat");
+
+            seatContainer.appendChild(seat);
+        }
+
+        const seats = document.querySelectorAll(".seat");
+        const slider = document.getElementById("intensitySlider");
+        const intensityLabel = document.getElementById("intensityLabel");
+        const botAttackBtn = document.getElementById("botAttackBtn");
+
+        let demandMultiplier = 1;
+
+        slider.addEventListener("input", () => {
+
+            const val = slider.value;
+
+            if (val == 1) {
+                intensityLabel.innerText = "LOW DEMAND";
+                demandMultiplier = 0.7;
+            }
+
+            else if (val == 2) {
+                intensityLabel.innerText = "NORMAL DEMAND";
+                demandMultiplier = 1;
+            }
+
+            else if (val == 3) {
+                intensityLabel.innerText = "PLAYOFF RUSH";
+                demandMultiplier = 1.4;
+            }
+
+            else {
+                intensityLabel.innerText = "FINAL MATCH CHAOS";
+                demandMultiplier = 2;
+            }
+        });
+
+        botAttackBtn.addEventListener("click", () => {
+
+            attackMode = true;
+
+            botRate = 95;
+
+            document.getElementById("gateStatus").innerText =
+                "LOCKDOWN";
+
+            setTimeout(() => {
+                attackMode = false;
+            }, 8000);
+
+        });
+        setInterval(() => {
+
+            let sold = 0;
+            let bots = 0;
+
+            seats.forEach(seat => {
+
+                seat.classList.remove("filled");
+                seat.classList.remove("bot");
+
+                const rand = Math.random();
+
+                if (rand > (0.55 - (0.2 * demandMultiplier))) {
+
+                    sold++;
+
+                    if (
+                        attackMode
+                            ? rand > 0.65
+                            : rand > (0.92 - (0.08 * demandMultiplier))
+                    ) {
+                        seat.classList.add("bot");
+                        bots++;
+                    }
+                    else {
+                        seat.classList.add("filled");
+                    }
+                }
+            });
+
+            document.getElementById("soldSeats").innerText =
+                sold;
+
+            document.getElementById("botSeats").innerText =
+                Math.floor((bots / Math.max(sold, 1)) * 100) + "%";
+
+            if (attackMode) {
+                document.getElementById("gateStatus").innerText =
+                    "LOCKDOWN";
+            }
+            else if (botRate > 70) {
+                document.getElementById("gateStatus").innerText =
+                    "RESTRICTED";
+            }
+            else {
+                document.getElementById("gateStatus").innerText =
+                    "OPEN";
+            }
+
+            revenue += Math.floor(Math.random() * 5000);
+
+            fairness += (Math.random() - 0.5) * 0.01;
+            fairness = Math.max(0.35, Math.min(0.95, fairness));
+
+            if (!attackMode) {
+                botRate += (Math.random() - 0.5) * 2;
+
+                // natural recovery toward safer levels
+                botRate *= 0.97;
+            }
+            botRate = Math.max(5, Math.min(95, botRate));
+
+            document.getElementById("revenueCounter").innerText =
+                "₹ " + revenue.toLocaleString();
+
+            document.getElementById("fairnessCounter").innerText =
+                fairness.toFixed(2);
+
+            document.getElementById("botCounter").innerText =
+                botRate.toFixed(0) + "%";
+
+            const threatText = document.getElementById("threatText");
+            const randomAction = actions[
+                Math.floor(Math.random() * actions.length)
+            ];
+
+            document.getElementById("actionText").innerText =
+                randomAction.action;
+
+            document.getElementById("priceMove").innerText =
+                randomAction.price;
+
+            document.getElementById("limitMove").innerText =
+                randomAction.limit;
+
+            document.querySelector(".decision-sub").innerText =
+                randomAction.sub;
+
+            if (botRate > 70) {
+                threatText.innerText = "HIGH";
+                threatText.style.color = "#ef4444";
+            }
+            else if (botRate > 45) {
+                threatText.innerText = "MEDIUM";
+                threatText.style.color = "#f59e0b";
+            }
+            else {
+                threatText.innerText = "LOW";
+                threatText.style.color = "#22c55e";
+            }
+
+        }, 1500);
+
+    </script>
 </body>
+
 </html>

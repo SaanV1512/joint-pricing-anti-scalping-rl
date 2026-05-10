@@ -1,0 +1,8 @@
+gymnasium
+numpy
+matplotlib
+scipy
+scikit-learn
+flask
+jinja2
+pandas
