@@ -412,7 +412,7 @@ class PPOAgent:
             "updates":        self.update_count,
             "obs_norm":       self.obs_norm.state_dict(),
         }, path)
-        print(f"[R-PPO] Saved → {path}")
+        print(f"[R-PPO] Saved -> {path}")
 
     def load(self, path: str) -> None:
         ckpt = torch.load(path, map_location=self.device, weights_only=False)
@@ -423,4 +423,4 @@ class PPOAgent:
         if "obs_norm" in ckpt:
             self.obs_norm.load_state_dict(ckpt["obs_norm"])
         self.reset_hidden()
-        print(f"[R-PPO] Loaded ← {path}")
+        print(f"[R-PPO] Loaded <- {path}")

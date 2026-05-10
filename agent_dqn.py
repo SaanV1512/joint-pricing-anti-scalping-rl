@@ -432,7 +432,7 @@ class DQNAgent:
             "steps_done":   self.steps_done,
             "updates":      self.updates,
         }, path)
-        print(f"[Rainbow] Saved → {path}")
+        print(f"[Rainbow] Saved -> {path}")
 
     def load(self, path: str) -> None:
         ckpt = torch.load(path, map_location=self.device, weights_only=False)
@@ -441,4 +441,4 @@ class DQNAgent:
         self.optimizer.load_state_dict(ckpt["optimizer"])
         self.steps_done = ckpt["steps_done"]
         self.updates    = ckpt["updates"]
-        print(f"[Rainbow] Loaded ← {path}")
+        print(f"[Rainbow] Loaded <- {path}")

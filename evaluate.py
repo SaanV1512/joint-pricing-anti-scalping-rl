@@ -24,6 +24,8 @@ os.makedirs(RESULTS_DIR, exist_ok=True)
 
 def run_episode(env: IPLTicketingEnv, policy, agent_type: str) -> Dict:
     state, _ = env.reset()
+    if agent_type == "ppo":
+        policy.reset_hidden()
     total_reward = total_revenue = fair_tickets = scalper_tickets = 0.0
     action_counts = np.zeros(N_ACTIONS, dtype=int)
     price_history = []
@@ -34,7 +36,7 @@ def run_episode(env: IPLTicketingEnv, policy, agent_type: str) -> Dict:
         if agent_type == "dqn":
             action = policy.select_action(state, training=False)
         elif agent_type == "ppo":
-            action, _, _ = policy.net.act(state)
+            action, _, _ = policy.collect_step(state)
         elif agent_type in ("static", "rule_based"):
             action = policy.select_action(state)
         else:

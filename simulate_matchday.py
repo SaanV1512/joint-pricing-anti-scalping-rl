@@ -43,6 +43,8 @@ def simulate(agent_label: str, policy, agent_type: str, seed: int = 99):
     env = IPLTicketingEnv(total_inventory=2000, match_duration=100,
                           base_price=1000.0, scalper_ratio=0.30, seed=seed)
     state, _ = env.reset()
+    if agent_type == "ppo":
+        policy.reset_hidden()
 
     log_lines  = []
     price_hist = []
@@ -74,7 +76,7 @@ def simulate(agent_label: str, policy, agent_type: str, seed: int = 99):
         if agent_type == "dqn":
             action = policy.select_action(state, training=False)
         elif agent_type == "ppo":
-            action, _, _ = policy.net.act(state)
+            action, _, _ = policy.collect_step(state)
         elif agent_type == "static":
             action = policy.select_action(state)
         elif agent_type == "rule_based":
