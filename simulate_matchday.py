@@ -94,7 +94,7 @@ def simulate(agent_label: str, policy, agent_type: str, seed: int = 99):
     total_scalpers = 0.0
     done           = False
     step           = 0
-    time.sleep(1)
+   
     while not done:
         # Get action
         if agent_type == "dqn":
@@ -168,7 +168,7 @@ def simulate(agent_label: str, policy, agent_type: str, seed: int = 99):
                 else "LOW"
             ),
 
-            "tickets_sold": env.initial_inventory - env.inventory,
+            "tickets_sold": env.total_inventory - env.inventory,
 
             "occupancy": occupancy
         }
@@ -214,6 +214,7 @@ def simulate(agent_label: str, policy, agent_type: str, seed: int = 99):
         log_lines.append(line)
         state = next_state
         step += 1
+        time.sleep(1)
 
     # Summary
     total_sold = total_fair + total_scalpers
