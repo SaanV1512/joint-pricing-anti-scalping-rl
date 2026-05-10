@@ -1,1 +1,6 @@
 /.venv
+venv/
+results/control.json
+results/live_status.json
+__pycache__/
+*.pyc

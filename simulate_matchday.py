@@ -3,8 +3,10 @@ from __future__ import annotations
 import argparse
 import os
 import sys
+import json
 
 import numpy as np
+import time
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -34,7 +36,29 @@ class C:
 def clr(text: str, colour: str) -> str:
     return f"{colour}{text}{C.RESET}"
 
+def decode_action(action_idx):
+    """
+    Converts env action index into readable dashboard actions.
+    """
+    mapping = {
+        0: ("INCREASE PRICE", "+10%", "TIGHTEN"),
+        1: ("INCREASE PRICE", "+10%", "RELAX"),
+        2: ("INCREASE PRICE", "+10%", "MAINTAIN"),
 
+        3: ("DECREASE PRICE", "-10%", "TIGHTEN"),
+        4: ("DECREASE PRICE", "-10%", "RELAX"),
+        5: ("DECREASE PRICE", "-10%", "MAINTAIN"),
+
+        6: ("MAINTAIN POLICY", "HOLD", "TIGHTEN"),
+        7: ("MAINTAIN POLICY", "HOLD", "RELAX"),
+        8: ("MAINTAIN POLICY", "HOLD", "MAINTAIN")
+    }
+
+    return mapping.get(action_idx, (
+        "UNKNOWN",
+        "HOLD",
+        "MAINTAIN"
+    ))
 # ─────────────────────────────────────────────────────────────────────────────
 # Main simulation
 # ─────────────────────────────────────────────────────────────────────────────
@@ -70,7 +94,7 @@ def simulate(agent_label: str, policy, agent_type: str, seed: int = 99):
     total_scalpers = 0.0
     done           = False
     step           = 0
-
+    time.sleep(1)
     while not done:
         # Get action
         if agent_type == "dqn":
@@ -82,8 +106,77 @@ def simulate(agent_label: str, policy, agent_type: str, seed: int = 99):
         elif agent_type == "rule_based":
             action = policy.select_action(state)
 
-        price_act, limit_act = decode_action(action)
-        next_state, reward, terminated, truncated, info = env.step(action)
+        control_path = os.path.join(RESULTS_DIR, 'control.json')
+        attack_mode = False
+
+        if os.path.exists(control_path):
+
+            with open(control_path, 'r') as f:
+                control_data = json.load(f)
+
+            attack_mode = control_data.get("bot_attack", False)
+        if attack_mode:
+            env.scalper_ratio = 0.85
+        else:
+            env.scalper_ratio = 0.30
+        action_name, price_move, limit_policy = decode_action(action)
+        price_act = price_move
+        limit_act = limit_policy
+        next_state, reward, terminated, truncated, info = env.step(action)    
+
+        # fake occupancy map for stadium
+        occupancy = []
+
+        for _ in range(240):
+
+            if np.random.rand() < info["fairness"]:
+                occupancy.append("fan")
+            else:
+                occupancy.append("bot")
+
+        live_data = {
+            "action": action_name,
+            "price_move": price_move,
+            "limit_policy": limit_policy,
+
+            "bot_rate": round(info["scalper_rate"] * 100, 2),
+            "fairness": round(info["fairness"], 2),
+            "revenue": int(info["revenue"]),
+
+            "match_phase": (
+                "LAUNCH RUSH"
+                if step < env.match_duration * 0.15
+                else (
+                    "MID-SALE"
+                    if step < env.match_duration * 0.7
+                    else "CLOSING RUSH"
+                )
+            ),
+
+            "gate_status": (
+                "LOCKDOWN"
+                if info["scalper_rate"] > 0.70
+                else "RESTRICTED"
+                if info["scalper_rate"] > 0.30
+                else "OPEN"
+            ),
+            "threat": (
+                "HIGH"
+                if info["scalper_rate"] > 0.7
+                else "MEDIUM"
+                if info["scalper_rate"] > 0.4
+                else "LOW"
+            ),
+
+            "tickets_sold": env.initial_inventory - env.inventory,
+
+            "occupancy": occupancy
+        }
+
+        with open("results/live_status.json", "w") as f:
+            json.dump(live_data, f)
+        with open(control_path, 'w') as f:
+            json.dump({"bot_attack": False}, f)
         done = terminated or truncated
 
         # Accumulate

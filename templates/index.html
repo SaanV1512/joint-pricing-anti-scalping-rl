@@ -613,6 +613,22 @@
             box-shadow: 0 0 25px rgba(239, 68, 68, 0.4);
         }
 
+        .phase-display {
+            margin-top: 2rem;
+        }
+
+        #intensityLabel {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #818cf8;
+            margin-bottom: 0.8rem;
+        }
+
+        .phase-sub {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             h1 {
@@ -764,12 +780,18 @@
             <div class="control-grid">
 
                 <div class="control-box">
-                    <label>Match Intensity</label>
+                    <label>Live Match Phase</label>
 
-                    <input type="range" min="1" max="4" value="2" id="intensitySlider">
+                    <div class="phase-display">
 
-                    <div id="intensityLabel">
-                        NORMAL DEMAND
+                        <div id="intensityLabel">
+                            LAUNCH RUSH
+                        </div>
+
+                        <div class="phase-sub">
+                            Real-time environment state
+                        </div>
+
                     </div>
                 </div>
 
@@ -865,30 +887,7 @@
     </div>
     <script>
 
-        let revenue = 1000000;
-        let fairness = 0.42;
-        let botRate = 35;
-        let attackMode = false;
-        const actions = [
-            {
-                action: "INCREASE PRICE",
-                sub: "Tightening purchase limits due to elevated scalper activity",
-                price: "+10%",
-                limit: "TIGHTEN"
-            },
-            {
-                action: "DECREASE PRICE",
-                sub: "Relaxing limits to improve fairness for genuine fans",
-                price: "-10%",
-                limit: "RELAX"
-            },
-            {
-                action: "MAINTAIN POLICY",
-                sub: "Current market conditions are stable",
-                price: "HOLD",
-                limit: "MAINTAIN"
-            }
-        ];
+
         const seatContainer = document.getElementById("seatContainer");
 
         for (let i = 0; i < 240; i++) {
@@ -900,153 +899,101 @@
         }
 
         const seats = document.querySelectorAll(".seat");
-        const slider = document.getElementById("intensitySlider");
-        const intensityLabel = document.getElementById("intensityLabel");
-        const botAttackBtn = document.getElementById("botAttackBtn");
+        const botAttackBtn =
+            document.getElementById("botAttackBtn");
 
-        let demandMultiplier = 1;
+        botAttackBtn.addEventListener("click", async () => {
 
-        slider.addEventListener("input", () => {
+            await fetch('/trigger_attack', {
+                method: 'POST'
+            });
 
-            const val = slider.value;
+        });
+        async function updateDashboard() {
 
-            if (val == 1) {
-                intensityLabel.innerText = "LOW DEMAND";
-                demandMultiplier = 0.7;
+            const response = await fetch('/live_data');
+
+            const data = await response.json();
+
+            if (!data || !data.action) return;
+
+            // METRICS
+            document.getElementById("intensityLabel").innerText =
+                data.match_phase;
+
+            document.getElementById("revenueCounter").innerText =
+                "₹ " + Number(data.revenue).toLocaleString();
+
+            document.getElementById("fairnessCounter").innerText =
+                data.fairness;
+
+            document.getElementById("botCounter").innerText =
+                data.bot_rate + "%";
+
+            document.getElementById("threatText").innerText =
+                data.threat;
+
+            // THREAT COLORS
+
+            const threatText =
+                document.getElementById("threatText");
+
+            if (data.threat === "HIGH") {
+                threatText.style.color = "#ef4444";
             }
 
-            else if (val == 2) {
-                intensityLabel.innerText = "NORMAL DEMAND";
-                demandMultiplier = 1;
-            }
-
-            else if (val == 3) {
-                intensityLabel.innerText = "PLAYOFF RUSH";
-                demandMultiplier = 1.4;
+            else if (data.threat === "MEDIUM") {
+                threatText.style.color = "#f59e0b";
             }
 
             else {
-                intensityLabel.innerText = "FINAL MATCH CHAOS";
-                demandMultiplier = 2;
+                threatText.style.color = "#22c55e";
             }
-        });
 
-        botAttackBtn.addEventListener("click", () => {
+            // RL POLICY PANEL
 
-            attackMode = true;
+            document.getElementById("actionText").innerText =
+                data.action;
 
-            botRate = 95;
+            document.getElementById("priceMove").innerText =
+                data.price_move;
+
+            document.getElementById("limitMove").innerText =
+                data.limit_policy;
+
+            // STADIUM STATS
+
+            document.getElementById("soldSeats").innerText =
+                data.tickets_sold;
+
+            document.getElementById("botSeats").innerText =
+                data.bot_rate + "%";
 
             document.getElementById("gateStatus").innerText =
-                "LOCKDOWN";
+                data.gate_status;
 
-            setTimeout(() => {
-                attackMode = false;
-            }, 8000);
+            // STADIUM OCCUPANCY
 
-        });
-        setInterval(() => {
-
-            let sold = 0;
-            let bots = 0;
-
-            seats.forEach(seat => {
+            seats.forEach((seat, idx) => {
 
                 seat.classList.remove("filled");
                 seat.classList.remove("bot");
 
-                const rand = Math.random();
+                if (!data.occupancy) return;
 
-                if (rand > (0.55 - (0.2 * demandMultiplier))) {
+                if (data.occupancy[idx] === "fan") {
+                    seat.classList.add("filled");
+                }
 
-                    sold++;
-
-                    if (
-                        attackMode
-                            ? rand > 0.65
-                            : rand > (0.92 - (0.08 * demandMultiplier))
-                    ) {
-                        seat.classList.add("bot");
-                        bots++;
-                    }
-                    else {
-                        seat.classList.add("filled");
-                    }
+                else if (data.occupancy[idx] === "bot") {
+                    seat.classList.add("bot");
                 }
             });
+        }
 
-            document.getElementById("soldSeats").innerText =
-                sold;
+        setInterval(updateDashboard, 1000);
 
-            document.getElementById("botSeats").innerText =
-                Math.floor((bots / Math.max(sold, 1)) * 100) + "%";
-
-            if (attackMode) {
-                document.getElementById("gateStatus").innerText =
-                    "LOCKDOWN";
-            }
-            else if (botRate > 70) {
-                document.getElementById("gateStatus").innerText =
-                    "RESTRICTED";
-            }
-            else {
-                document.getElementById("gateStatus").innerText =
-                    "OPEN";
-            }
-
-            revenue += Math.floor(Math.random() * 5000);
-
-            fairness += (Math.random() - 0.5) * 0.01;
-            fairness = Math.max(0.35, Math.min(0.95, fairness));
-
-            if (!attackMode) {
-                botRate += (Math.random() - 0.5) * 2;
-
-                // natural recovery toward safer levels
-                botRate *= 0.97;
-            }
-            botRate = Math.max(5, Math.min(95, botRate));
-
-            document.getElementById("revenueCounter").innerText =
-                "₹ " + revenue.toLocaleString();
-
-            document.getElementById("fairnessCounter").innerText =
-                fairness.toFixed(2);
-
-            document.getElementById("botCounter").innerText =
-                botRate.toFixed(0) + "%";
-
-            const threatText = document.getElementById("threatText");
-            const randomAction = actions[
-                Math.floor(Math.random() * actions.length)
-            ];
-
-            document.getElementById("actionText").innerText =
-                randomAction.action;
-
-            document.getElementById("priceMove").innerText =
-                randomAction.price;
-
-            document.getElementById("limitMove").innerText =
-                randomAction.limit;
-
-            document.querySelector(".decision-sub").innerText =
-                randomAction.sub;
-
-            if (botRate > 70) {
-                threatText.innerText = "HIGH";
-                threatText.style.color = "#ef4444";
-            }
-            else if (botRate > 45) {
-                threatText.innerText = "MEDIUM";
-                threatText.style.color = "#f59e0b";
-            }
-            else {
-                threatText.innerText = "LOW";
-                threatText.style.color = "#22c55e";
-            }
-
-        }, 1500);
+        updateDashboard();
 
     </script>
 </body>

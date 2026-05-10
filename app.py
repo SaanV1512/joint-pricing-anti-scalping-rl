@@ -1,5 +1,7 @@
 from flask import Flask, render_template, send_from_directory
 import os
+import json
+from flask import request
 
 app = Flask(__name__)
 RESULTS_DIR = os.path.join(os.path.dirname(__file__), 'results')
@@ -38,7 +40,26 @@ def index():
     others = [img for img in images if img not in dashboards and img not in heatmaps]
 
     return render_template('index.html', table_data=table_data, dashboards=dashboards, heatmaps=heatmaps, others=others)
+@app.route('/live_data')
+def live_data():
 
+    path = os.path.join(RESULTS_DIR, 'live_status.json')
+
+    if os.path.exists(path):
+        with open(path, 'r') as f:
+            data = json.load(f)
+        return data
+
+    return {}
+@app.route('/trigger_attack', methods=['POST'])
+def trigger_attack():
+
+    control_path = os.path.join(RESULTS_DIR, 'control.json')
+
+    with open(control_path, 'w') as f:
+        json.dump({"bot_attack": True}, f)
+
+    return {"status": "ok"}
 @app.route('/results/<path:filename>')
 def results(filename):
     return send_from_directory(RESULTS_DIR, filename)
