@@ -13,8 +13,6 @@ This repository accompanies the academic report: *Reinforcement Learning for Joi
 - **Baselines**: Static pricing and a rule-based dynamic controller.
 - **Artifacts**: Training dashboards, evaluation tables, action heatmaps, match-day logs, and a small Flask gallery.
 
-For a **line-by-line, viva-oriented explanation** of every module, see **[VIVA_README.md](./VIVA_README.md)**.
-
 ---
 
 ## Features
@@ -124,19 +122,10 @@ Open **http://127.0.0.1:5000** — serves `eval_summary` and PNGs from `results/
 **State**: normalized inventory, time, demand sample, suspicion score, limit level, price.  
 **Action**: discretized joint price and purchase-limit control.  
 **Reward**: weighted sum of revenue, fairness (tickets to genuine users), scalper penalty, price dissatisfaction penalty, and late unsold-inventory penalty.
-
-Full MDP and implementation notes: **[VIVA_README.md](./VIVA_README.md)**.
-
 ---
 
 ## Results
 
 After `evaluate.py`, see `results/eval_summary.txt` and `comparison_bar_chart.png`. Metrics include total reward, revenue, **fairness index** (share of tickets to genuine users), **scalper rate**, and average price. Interpret all numbers in the context of this **simulator**, not live IPL data.
-
----
-
-## License
-
-No license file is included in this repository. Add a `LICENSE` if you plan to publish publicly.
 
 ---
