@@ -226,6 +226,8 @@ class IPLTicketingEnv(gym.Env):
                     step_behaviors.append(UserBehavior(tickets, tickets / 1.0, 1, 1))
 
         self.total_revenue += revenue
+        fairness = fair_tickets / max(fair_tickets + scalper_tickets, 1)
+        scalper_rate = scalper_tickets / max(fair_tickets + scalper_tickets, 1)
 
         # ── 5. Veda's Suspicion Score System (Hybrid ML) ──────────────────────
         S_prime = self.suspicion_system.aggregate_suspicion(step_behaviors)
@@ -256,6 +258,8 @@ class IPLTicketingEnv(gym.Env):
             "revenue":         revenue,
             "fair_tickets":    fair_tickets,
             "scalper_tickets": scalper_tickets,
+            "fairness":         fairness,
+            "scalper_rate":     scalper_rate,
             "price":           self.current_price,
             "limit":           self.purchase_limit,
             "suspicion":       self.suspicion_score,
